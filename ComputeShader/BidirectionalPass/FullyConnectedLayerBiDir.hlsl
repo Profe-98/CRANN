@@ -18,7 +18,7 @@ double ReLU(double x)
 
 double LinearTransformation(uint j) // Matrix multiplication can be applied here.
 {
-    double val = 0.0;
+    double val = bias;
     uint k = 0;
 
     while(k < 6)
@@ -26,14 +26,13 @@ double LinearTransformation(uint j) // Matrix multiplication can be applied here
         val += Input[k/3] * Weights[j+k];
         k += 3;
     }
-    return val + bias;
+    return val;
 }
 
-[numThreads(3, 3, 1)]
+[numThreads(3, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
     uint index_inputs = DTid.x;
-    uint index_weights_cols = DTid.y;
 
     if(adjust == true)
     {

@@ -4,19 +4,10 @@
 
 RWStructuredBuffer<double> Input : register(u5);
 RWStructuredBuffer<double> Weights : register(u6);
-RWStructuredBuffer<double> Output : register(u7);
-RWStructuredBuffer<double> actuals : register(u8);
+RWStructuredBuffer<double> Predictions : register(u7);
+RWStructuredBuffer<double> Actuals : register(u8);
 cbuffer ConstantBuffer : register(b2) { double bias; };
 cbuffer ConstantBuffer : register(b2) { double learningrate; };
-
-void GradientDescent(double err, uint row)
-{
-    uint c; 
-    for(c = 0; c < 3; ++c)
-    {
-
-    }
-}
 
 void SoftMax()
 {
@@ -24,11 +15,11 @@ void SoftMax()
     double exp_sum = 0.0;
     for(uint iter = 0; iter < 3; ++iter)
     {
-        exp_sum += pow(e, Output[iter]);
+        exp_sum += pow(e, Predictions[iter]);
     }
     for(uint iter2 = 0; iter2 < 3; ++iter)
     {
-        Output[iter] = Output[iter] / exp_sum;
+        Predictions[iter] = Predictions[iter] / exp_sum;
     }
 
 }
@@ -36,7 +27,7 @@ void SoftMax()
 
 double LinearTransformation(uint j) // Matrix multiplication can be applied here.
 {
-    double val = 0.0;
+    double val = bias;
     uint k = 0;
 
     while(k < 6)
@@ -44,7 +35,7 @@ double LinearTransformation(uint j) // Matrix multiplication can be applied here
         val += Input[k/3] * Weights[j+k];
         k += 3;
     }
-    return val + bias;
+    return val;
 }
 
 
@@ -54,10 +45,9 @@ void main(uint3 DTid : SV_DispatchThreadID)
     uint index_inputs = DTid.x;
 
     double zi = LinearTransformation(index_inputs);
-    Output[index_inputs] = zi;
+    Predictions[index_inputs] = zi;
     if(index_inputs == 3)
     {
         SoftMax();
     }
-    //double error = CalculateError(prediction, actuals[index_inputs]);
 }
