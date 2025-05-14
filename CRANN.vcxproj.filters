@@ -21,9 +21,15 @@
     <ClCompile Include="DXObject.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="DataHandler.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DXObject.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHandler.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

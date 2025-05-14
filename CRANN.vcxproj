@@ -129,9 +129,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Crann.cpp" />
+    <ClCompile Include="DataHandler.cpp" />
     <ClCompile Include="DXObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataHandler.h" />
     <ClInclude Include="DXObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
